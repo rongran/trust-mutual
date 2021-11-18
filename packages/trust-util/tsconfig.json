@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "ES3",
+        "module": "umd",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "moduleResolution": "node",
+        "sourceMap": true
+    },
+    "lib": [
+        "esnext",
+        "dom"
+      ],
+    "files": [
+        "src/index.ts",
+    ],
+    "include": ["src/**/*"],
+    "exclude": [
+        // 排除掉哪些类库
+        "node_modules",
+        "**/node_modules",
+        "**/__tests__",
+      ]
+}
