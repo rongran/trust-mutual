@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { src, dest, parallel } from 'gulp';
+import { src, dest, parallel, series, watch } from 'gulp';
 const ESbuild = require('gulp-esbuild');
 const ts = require('gulp-typescript');
 const DIST_DIR = 'dist/';
 const ES_DIR = 'es/';
 const LIB_DIR = 'lib/';
-const bundleDIST = (cb: () => void) => {
-  src('src/**/*.ts')
+const bundleDIST = async (cb: () => void) => {
+  await src('src/**/*.ts')
     .pipe(
       ts({
         noImplicitAny: true,
@@ -17,6 +17,7 @@ const bundleDIST = (cb: () => void) => {
     .pipe(dest(DIST_DIR));
   cb();
 };
+
 const bundleES = (cb: () => void) => {
   src('src/**/*.ts')
     .pipe(
@@ -24,10 +25,14 @@ const bundleES = (cb: () => void) => {
         format: 'esm',
         // minifyWhitespace: true,
         treeShaking: true,
-        bundle: true,
+        // bundle: true,
+        splitting: true,
       }),
     )
     .pipe(dest(ES_DIR));
+  watch('dist/', () => {
+    src('dist/**/*.d.ts').pipe(dest(ES_DIR));
+  });
   cb();
 };
 const bundleLIB = (cb: () => void) => {
@@ -44,5 +49,5 @@ const bundleLIB = (cb: () => void) => {
     .pipe(dest(LIB_DIR));
   cb();
 };
-const build = parallel(bundleDIST, bundleES, bundleLIB);
+const build = series(bundleDIST, bundleLIB, bundleES);
 export default build;
