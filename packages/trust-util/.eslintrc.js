@@ -6,5 +6,5 @@ module.exports = {
   },
   extends: ['plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   rules: {},
-  ignorePatterns: ['dist/**/*.js', 'lib/**/*.js', 'es/**/*.js', 'dist/**/*.ts', 'example'],
+  ignorePatterns: ['dist/', 'lib/', 'es/', 'example', 'gulpfile.js'],
 };

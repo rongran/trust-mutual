@@ -1,4 +1,4 @@
-export const getKVFromUrl = (url: string) => {
+const getKVFromUrl = (url: string) => {
   const params = url.split('?')[1];
   const kvObject: any = {};
   params.split('&').map((item) => {
@@ -6,3 +6,4 @@ export const getKVFromUrl = (url: string) => {
   });
   return kvObject;
 };
+export default getKVFromUrl;
